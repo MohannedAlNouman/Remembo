@@ -1,0 +1,20 @@
+{
+  "name": "remembo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js",
+    "build": "cd .. && cd client && yarn install && yarn run build"
+  },
+  "author": "Mohanned Al Nouman",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  },
+  "engines": {
+    "node": "16.10.0"
+  }
+}
