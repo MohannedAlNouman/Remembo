@@ -26,22 +26,41 @@ const LoginPage = props => {
     dispatch(userLoading());
   };
 
-  const responseGoogle = res => {
-    const response = res ? res.profileObj : {};
+  const [data, setData] = useState(null);
+
+  // // useEffect(() => {
+  // //   fetch("/test", {
+  // //     method: "GET"
+  // //   })
+  // //     .then(res => res.json())
+  // //     .then(data => console.log("Success:", data))
+  // //     .catch(error => {
+  // //       console.error("Error:", error);
+  // //     });
+  // // }, []);
+  //
+  // useEffect(() => {
+  //
+  // }, []);
+
+  const responseGoogle = resp => {
+    const response = resp ? resp.profileObj : {};
+    fetch("/api", {
+      method: "POST",
+      body: {chicken: "yummy"},
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(data => setData(data.message));
     dispatch(userRecieved(response));
   };
 
   const errorHandler = response => {
     console.error(response);
   };
-
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    fetch("/api")
-      .then(res => res.json())
-      .then(data => setData(data.message));
-  }, []);
 
   return (
     <div>

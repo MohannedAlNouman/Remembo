@@ -1,11 +1,30 @@
 const path = require("path");
+
 const express = require("express");
 const app = express();
+
+const mongoose = require("mongoose");
+main().catch(err => console.log(err));
+
+async function main() {
+  await mongoose.connect("mongodb://localhost:27017/RememboDB");
+  const userSchema = new mongoose.Schema({
+    user: String
+  });
+  const User = mongoose.model("User", userSchema);
+}
+
+// mongo "mongodb+srv://cluster0.ww7po.mongodb.net/myFirstDatabase" --username admin
 
 app.use(express.static(path.resolve(__dirname, "../client/build")));
 
 app.get("/api", (req, res) => {
-  res.json({message: "Hello from server!"});
+  res.json({message: "Get request sent"});
+});
+
+app.post("/api", (req, res) => {
+  console.log(req);
+  res.json({message: "Post request sent"});
 });
 
 app.get("*", (req, res) => {
