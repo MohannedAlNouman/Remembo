@@ -2,6 +2,8 @@ const path = require("path");
 
 const express = require("express");
 const app = express();
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 const mongoose = require("mongoose");
 main().catch(err => console.log(err));
@@ -23,7 +25,7 @@ app.get("/api", (req, res) => {
 });
 
 app.post("/api", (req, res) => {
-  console.log(req);
+  console.log(req.body);
   res.json({message: "Post request sent"});
 });
 

@@ -28,33 +28,26 @@ const LoginPage = props => {
 
   const [data, setData] = useState(null);
 
-  // // useEffect(() => {
-  // //   fetch("/test", {
-  // //     method: "GET"
-  // //   })
-  // //     .then(res => res.json())
-  // //     .then(data => console.log("Success:", data))
-  // //     .catch(error => {
-  // //       console.error("Error:", error);
-  // //     });
-  // // }, []);
-  //
-  // useEffect(() => {
-  //
-  // }, []);
-
   const responseGoogle = resp => {
     const response = resp ? resp.profileObj : {};
-    fetch("/api", {
-      method: "POST",
-      body: {chicken: "yummy"},
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      }
-    })
-      .then(res => res.json())
-      .then(data => setData(data.message));
+    // let dataJSON = {
+    //   objective: "finish requests basics",
+    //   secondary: "do dishes"
+    // };
+    // const dataString = JSON.stringify(dataJSON);
+    // fetch("/api", {
+    //   method: "POST",
+    //   body: dataString,
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json"
+    //   }
+    // })
+    //   .then(res => res.json())
+    //   .then(data => setData(data.message))
+    //   .catch(error => {
+    //     console.error("Error:", error);
+    //   });
     dispatch(userRecieved(response));
   };
 
@@ -62,10 +55,34 @@ const LoginPage = props => {
     console.error(response);
   };
 
+  const submitData = e => {
+    e.preventDefault();
+    console.log(e.target.data1.value);
+    console.log(e.target.data2.value);
+    // fetch("/api", {
+    //   method: "POST",
+    //   body: message,
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json"
+    //   }
+    // })
+    //   .then(res => res.json())
+    //   .then(data => setData(data.message))
+    //   .catch(error => {
+    //     console.error("Error:", error);
+    //   });
+  };
+
   return (
     <div>
       <div>Profile loading status: {loadingStatus}</div>
       <h3>{`Hello ${name}`}</h3>
+      <form action="/" method="post" onSubmit={e => submitData(e)}>
+        <input type="text" name="data1"></input>
+        <input type="datetime-local" name="data2"></input>
+        <input type="submit"></input>
+      </form>
       <div>{data}</div>
       <GoogleLogin
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
