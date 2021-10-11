@@ -82,12 +82,18 @@ const LoginPage = props => {
   return (
     <div>
       <div>Profile loading status: {loadingStatus}</div>
-      <h3>{`Hello ${name}`}</h3>
-      <form action="/" method="post" onSubmit={e => submitData(e)}>
-        <input type="text" name="data1"></input>
-        <input type="datetime-local" name="data2"></input>
-        <input type="submit"></input>
-      </form>
+      {user.name ? (
+        <div>
+          <h3>{`Hello ${user.name}`}</h3>
+          <form action="/" method="post" onSubmit={e => submitData(e)}>
+            <input type="text" name="data1"></input>
+            <input type="datetime-local" name="data2"></input>
+            <input type="submit"></input>
+          </form>
+        </div>
+      ) : (
+        <h3>Hello</h3>
+      )}
       <div>{data}</div>
       <GoogleLogin
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
