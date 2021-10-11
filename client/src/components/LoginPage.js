@@ -57,21 +57,26 @@ const LoginPage = props => {
 
   const submitData = e => {
     e.preventDefault();
-    console.log(e.target.data1.value);
-    console.log(e.target.data2.value);
-    // fetch("/api", {
-    //   method: "POST",
-    //   body: message,
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json"
-    //   }
-    // })
-    //   .then(res => res.json())
-    //   .then(data => setData(data.message))
-    //   .catch(error => {
-    //     console.error("Error:", error);
-    //   });
+
+    const formData = new FormData(e.target);
+    const json = {};
+    Array.from(formData.entries()).forEach(([key, value]) => {
+      json[key] = value;
+    });
+
+    fetch("/api", {
+      method: "POST",
+      body: JSON.stringify(json),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(data => setData(data.message))
+      .catch(error => {
+        console.error("Error:", error);
+      });
   };
 
   return (
