@@ -11,6 +11,8 @@
   "author": "Mohanned Al Nouman",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
     "express": "^4.17.1",
     "mongoose": "^6.0.8",
     "path": "^0.12.7"

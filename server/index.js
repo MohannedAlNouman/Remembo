@@ -2,31 +2,42 @@ const path = require("path");
 
 const express = require("express");
 const app = express();
-app.use(express.urlencoded({extended: true}));
+app.use(
+  express.urlencoded({
+    extended: true
+  })
+);
 app.use(express.json());
 
-const mongoose = require("mongoose");
-main().catch(err => console.log(err));
+//not required for production
+const cors = require("cors");
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 
-async function main() {
-  await mongoose.connect("mongodb://localhost:27017/RememboDB");
-  const userSchema = new mongoose.Schema({
-    user: String
-  });
-  const User = mongoose.model("User", userSchema);
-}
-
-// mongo "mongodb+srv://cluster0.ww7po.mongodb.net/myFirstDatabase" --username admin
+const db = require("./DB/index");
+const User = require("./models/userSchema");
+const List = require("./models/listSchema");
+const Data = require("./models/dataSchema");
 
 app.use(express.static(path.resolve(__dirname, "../client/build")));
 
 app.get("/api", (req, res) => {
-  res.json({message: "Get request sent"});
+  res.json({
+    message: "Get request received"
+  });
 });
 
 app.post("/api", (req, res) => {
   console.log(req.body);
-  res.json({message: "Post request sent"});
+  let newData = new Data({value: req.body.data, time: req.body.time})
+  newData.save(err=>{
+    res.send({
+      message: "Post request sent"
+    });
+  })
 });
 
 app.get("*", (req, res) => {
